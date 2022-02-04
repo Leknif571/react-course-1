@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  overflow-x: auto;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -27,8 +28,21 @@ code {
   width: 18rem;
 }
 
-.content-col{
-  background-color: gray;
+
+.overf{
+  /* overflow-x: visible; */
+  display: flex;
+  overflow-x: auto;
+}
+
+
+.overf .content-col{
+  min-width: 18.5rem;
+  /* line-height: 200px; */
+  text-align: center;
+  background-color: #ddd;
+  margin-right: 3px;
+  padding: 2px;
 }
 
 

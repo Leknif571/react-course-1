@@ -1,43 +1,54 @@
-import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import React from 'react';
 import {Card} from './Card';
-import {ListToExport} from './ModalList'
+import { useSelector } from 'react-redux';
 
-// const Liste = [{'title':'liste 1', 'id':1}, {'title':'liste 2', 'id':2}, {'title':'liste 3', 'id':3}]
 
-function List() {
-    const [ListAdd, setOnList] = useState([{}]);
+interface card{
+  id: number,
+  title: String,
+  description: String,
+  pos: number
+}
 
-    const addOnList = () =>{
-      setOnList([...ListToExport]);
-    }
-     
-       
+interface Props {
+  id: number,
+  title: String,
+  card: Array<card>;
+}
+
+
+export const List = (list:Props) => {
+  let card = useSelector((store:any) => store.listred)
+  console.log(card);
+  
     return(
-    
-      <div>
-          
-          <div className="row align-items-center">
-        {ListAdd.map(function(data:any){
-          console.log(data); 
-            return(
-          <div className='col content-col'>
-            <button onClick={()=>addOnList()}>refresh</button>
-              <div className='row'>                
-                  <h3>{data.title}</h3>
-                  <Card id = {data.id}/>
-              </div>
-          </div>   
-        )})}
-          {/* <div className='col content-col'>
-              <div className='row'>    
-                  <h3>Mes premières listes</h3>
-                  <Card/>
-              </div>
-          </div> */}
-        </div>
-   
-      </div>
+          <div className='content-col'>                     
+              <h3>{list.title}</h3>
+              
+                  {list.card.map(     
+                    ({id, title, description, pos}:card) => 
+                      // console.log(id+"-"+title+"-"+description+"-"+pos);
+                      // console.log(description);
+                      
+                      <Card id={id} title={title} description={description} pos={pos}/> 
+                      
+                  )} 
+          </div> 
     )
   }
 
-  export {List};
+  interface StateProps{
+    id:number,
+    title:string,
+    card: Array<card>;
+  }
+
+  const mapStateToProps = (state: any):StateProps => ({
+    id: state.list.id,
+    title: state.list.title,
+    card: state.list.card
+  });
+
+
+export default connect(mapStateToProps)(List);
