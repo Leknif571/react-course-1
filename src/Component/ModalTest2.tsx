@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { TextField, InputLabel, FormControl, Select, MenuItem, FormHelperText } from "@mui/material";
+import { TextField, InputLabel, FormControl, Select, MenuItem, FormHelperText, ClickAwayListenerProps } from "@mui/material";
 import { Add_card_action } from '../Store/FunctionReducers/listReducers';
 import { StoreList } from '../Store/store';
 import { useSelector } from "react-redux";
@@ -19,6 +19,46 @@ const style = {
   boxShadow: 24,
   p: 4
 };
+
+interface list {
+  id: number,
+  title: String,
+}
+
+interface randomObject{
+  length: number;
+  startsWithLowerCase: boolean,
+  includeNumbers: boolean,
+  includeUpperCase: boolean
+
+}
+
+function strRandom(o:randomObject) {
+  var a = 10,
+      b = 'abcdefghijklmnopqrstuvwxyz',
+      c = '',
+      d = 0,
+      e = ''+b;
+  if (o) {
+    if (o.startsWithLowerCase) {
+      c = b[Math.floor(Math.random() * b.length)];
+      d = 1;
+    }
+    if (o.length) {
+      a = o.length;
+    }
+    if (o.includeUpperCase) {
+      e += b.toUpperCase();
+    }
+    if (o.includeNumbers) {
+      e += '1234567890';
+    }
+  }
+  for (; d < a; d++) {
+    c += e[Math.floor(Math.random() * e.length)];
+  }
+  return c;
+}
 
 
 export default function BasicModal2() {
@@ -36,6 +76,7 @@ export default function BasicModal2() {
 
 //  let err = true;
   const handleChange = (event:any) => {
+    console.log(event.type)
     // if(!event.target.value){
       setList(event.target.value);
     // }else(event)
@@ -47,7 +88,14 @@ export default function BasicModal2() {
  
 
   function test2(title:string, description:string, wlist:number){
-    // console.log(!wlist.toString());
+    
+    let addId = strRandom({
+      includeUpperCase: true,
+      includeNumbers: true,
+      length: 10,
+      startsWithLowerCase: true
+    });
+
     console.log(wlist);
     if(wlist == -1){
       console.log('choisir une liste est obligatoire');
@@ -56,7 +104,7 @@ export default function BasicModal2() {
       
     }else{
          setError(false);
-         StoreList.dispatch({type:Add_card_action, index:wlist, payload:{ id:(list[wlist].card.length-1)+1, title:title, description:description, pos:1 }})
+         StoreList.dispatch({type:Add_card_action, index:wlist, payload:{ id:addId, title:title, description:description, pos:1 }})
          handleClose();
          
   }
@@ -135,7 +183,7 @@ export default function BasicModal2() {
               <em>Séléctionner une liste</em>
             </MenuItem>
             { list.map(
-              ({id, title}:any) =>
+              ({id, title}:list) =>
               <MenuItem value={id}>{title}</MenuItem>
               ) }
           </Select>

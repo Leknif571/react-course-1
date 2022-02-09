@@ -4,7 +4,7 @@ import {Droppable } from 'react-beautiful-dnd';
 
 
 interface card{
-  id: number,
+  id: String,
   title: String,
   description: String,
   pos: number
@@ -18,7 +18,7 @@ interface Props {
 
 
 export const List = (list:Props) => {
-  // let card = useSelector((store:any) => store.cardred)
+  // let card = useSelector((store:r) => store.cardred)
   console.log(list.card);
   
     return(

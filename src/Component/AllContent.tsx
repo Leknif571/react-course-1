@@ -7,6 +7,19 @@ import { Move } from '../Store/FunctionReducers/listReducers';
 import { StoreList } from '../Store/store';
 
 
+
+interface Card{
+  id: String,
+  title: String,
+  description: String,
+  pos: number,
+}
+interface list{
+  title:String,
+  card: Array<Card>,
+  id: number,
+}
+
 const dragEnd = (result: DropResult) =>{
    const {source, destination} = result
 
@@ -39,7 +52,7 @@ function AllContent() {
         <div >
          <div className="overf">
           {list.map(
-            ({id, title, card}:any) =>
+            ({id, title, card}:list) =>
             <List id={id} title={title} card={card}/>
           )}
 

@@ -4,17 +4,19 @@ import { StoreList } from '../Store/store';
 
 
 interface card{
-  id: number,
+  id: String,
   title: String,
   description: String,
   pos: number,
   index:number,
   wListId:number
 } 
-function deleteCard(id:number, idl:number){
+
+
+function deleteCard(id:String, idl:number){
   StoreList.dispatch({type:Delete_card_action,index:idl, payload:id})
 }
-export var Card = (card:card):any =>{
+export var Card = (card:card) =>{
     const idDrag = card.id.toString()+'-'+card.wListId.toString()
     return(
       <Draggable draggableId={idDrag} index={card.index} >
