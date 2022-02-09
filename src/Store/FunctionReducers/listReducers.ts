@@ -31,11 +31,13 @@ export function ListReducer(state:Array<any> = Liste, action:any){
 
         case Move:
             let newArrayM = state.slice();
+            let id = 0;
             let cardMem = newArrayM[action.source].card.filter((element:any) => element.id == action.idCard);
             newArrayM[action.source].card = newArrayM[action.source].card.filter((element:any) => element.id != action.idCard);
-            cardMem.map((e:list)=>{
-                console.log(e.id);
-            } )
+            // newArrayM[action.destination].card.map((e:list)=>{
+            //     id++;
+            //     e.id = id;
+            // } )
             cardMem[0].id = newArrayM[action.destination].card.length;
             newArrayM[action.destination].card = [...newArrayM[action.destination].card, cardMem[0]];
             
