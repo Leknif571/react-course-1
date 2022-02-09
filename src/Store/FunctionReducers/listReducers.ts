@@ -1,5 +1,3 @@
-import { stat } from "fs";
-
 const Card = [{id:0, title:'card1', description:"description1",pos:1 },{id:1, title:'card1', description:"description1",pos:1 }]
 const Liste = [{title:'liste 2', card:Card, id:0}];
 
@@ -9,6 +7,18 @@ export const Add_card_action = "Add_card_action";
 export const Delete_list_action = "Delete_list_action";
 export const Delete_card_action = "Delete_card_action";
 export const Move = "Move";
+
+
+interface Card{
+    id: number,
+    title: String,
+    pos: number,
+}
+interface list{
+    id: number,
+    title:String,
+    card: Card
+}
 
 export function ListReducer(state:Array<any> = Liste, action:any){
 
@@ -22,8 +32,11 @@ export function ListReducer(state:Array<any> = Liste, action:any){
         case Move:
             let newArrayM = state.slice();
             let cardMem = newArrayM[action.source].card.filter((element:any) => element.id == action.idCard);
-            console.log(cardMem);
             newArrayM[action.source].card = newArrayM[action.source].card.filter((element:any) => element.id != action.idCard);
+            cardMem.map((e:list)=>{
+                console.log(e.id);
+            } )
+            cardMem[0].id = newArrayM[action.destination].card.length;
             newArrayM[action.destination].card = [...newArrayM[action.destination].card, cardMem[0]];
             
             return newArrayM;

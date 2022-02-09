@@ -11,7 +11,7 @@ const dragEnd = (result: DropResult) =>{
    const {source, destination} = result
 
   if (result.reason === "DROP") {
-    if (!result.destination) {
+    if (!result.destination || source.droppableId == destination?.droppableId) {
       return;
     }
   }

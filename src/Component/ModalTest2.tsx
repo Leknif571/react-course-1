@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { TextField, InputLabel, FormControl, Select, MenuItem, cardMediaClasses } from "@mui/material";
+import { TextField, InputLabel, FormControl, Select, MenuItem, FormHelperText } from "@mui/material";
 import { Add_card_action } from '../Store/FunctionReducers/listReducers';
 import { StoreList } from '../Store/store';
 import { useSelector } from "react-redux";
@@ -29,27 +29,44 @@ export default function BasicModal2() {
   const [title,setTitle] = useState('');
   const [description,setDescription] = useState('');
   const list = useSelector((store:any) => store.listred)
-
   const [wList, setList] = React.useState('');
-  // const [wListId, setListId] = React.useState('');
+  const [err,setError] = useState(false);
 
+
+
+//  let err = true;
   const handleChange = (event:any) => {
-    setList(event.target.value);
-    console.log(event.target.value);
+    // if(!event.target.value){
+      setList(event.target.value);
+    // }else(event)
+    
+    // console.log(event.target.value.toString()=='');
   };
 
   
-
+ 
 
   function test2(title:string, description:string, wlist:number){
+    // console.log(!wlist.toString());
+    console.log(wlist);
+    if(wlist == -1){
+      console.log('choisir une liste est obligatoire');
+      setError(true);
+      console.log(err);
+      
+    }else{
+         setError(false);
+         StoreList.dispatch({type:Add_card_action, index:wlist, payload:{ id:(list[wlist].card.length-1)+1, title:title, description:description, pos:1 }})
+         handleClose();
+         
+  }
     
-    StoreList.dispatch({type:Add_card_action, index:wlist, payload:{ id:(list[wlist].card.length-1)+1, title:title, description:description, pos:1 }})
 
     // console.log(Add_card_action);
-    console.log(wlist);
-    console.log(typeof(wlist));
+    // console.log(wlist);
+    // console.log(typeof(wlist));
    
-    handleClose();
+    
   }
 
   return (
@@ -106,25 +123,24 @@ export default function BasicModal2() {
           >
 
         <FormControl variant="filled" fullWidth>
-          <InputLabel id="demo-simple-select-filled-label">Liste</InputLabel>
+          <InputLabel id="demo-simple-select-filled-label">Séléctionner une liste</InputLabel>
           <Select
+            error={err}
             labelId="demo-simple-select-filled-label"
-            id="demo-simple-select-filled"
+            id={"demo-simple-select-filled-error"}
             value={wList}
             onChange={handleChange}
           >
-            <MenuItem value="">
+            <MenuItem value={'-1'}>
               <em>Séléctionner une liste</em>
             </MenuItem>
             { list.map(
               ({id, title}:any) =>
               <MenuItem value={id}>{title}</MenuItem>
               ) }
-            
-
           </Select>
         </FormControl>
-
+        {err && <FormHelperText error>Ce champs est requis !</FormHelperText>}
           </Box>
 
           <Button variant="outlined" color="success"  onClick= {() => test2(title, description, parseInt(wList))}>

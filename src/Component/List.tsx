@@ -1,8 +1,6 @@
 import { connect } from 'react-redux';
-import React from 'react';
 import {Card} from './Card';
-import { useSelector } from 'react-redux';
-import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
+import {Droppable } from 'react-beautiful-dnd';
 
 
 interface card{
@@ -28,7 +26,7 @@ export const List = (list:Props) => {
       <Droppable droppableId={list.id.toString()}>
         {(provided)=>(
           <div className='content-col' {...provided.droppableProps} ref={provided.innerRef}>                     
-              <h3>{list.title}</h3>
+              <h3 className='titleList'>{list.title}</h3>
                   {list.card.map(     
                     ({id, title, description, pos}:card, index:number) => 
                         <Card id={id} title={title} description={description} pos={pos} index={index} wListId={list.id}/>                

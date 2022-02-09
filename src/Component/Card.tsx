@@ -1,4 +1,4 @@
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import { Draggable } from 'react-beautiful-dnd';
 import { Delete_card_action } from '../Store/FunctionReducers/listReducers';
 import { StoreList } from '../Store/store';
 
