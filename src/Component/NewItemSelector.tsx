@@ -1,31 +1,19 @@
-import { title } from 'process';
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import {Card} from './Card';
-
-
-import {Modal} from './ModalList';
-
-import {ModalBis} from './ModalCard';
-
-function saMarche(){
-    alert('ca marche');
-}
+import BasicModal from './ModalTest';
+import BasicModal2 from './ModalTest2';
 
 function NewItemSelector() {
-    // const [isOpen,setIsOpen] = useState(false);
-    const list = useSelector((store:any) => store.listred)
     return(
-      <div>
-       {/* <button className='btn btn-success m-2' type="submit"  onClick={() => setIsOpen(true)}>New Liste</button>
-       <button className='btn btn-success' type="submit"  onClick={saMarche}>New Card</button> */}
+      <div className='row'>
+          <div className='col-md-2'>
+            <BasicModal/>
+          </div>
 
-        
-          <Modal addList={list}/>
-          <ModalBis addCard={list}/>
-        
-       
+          <div className='col-md-2'>
+           <BasicModal2/> 
+          </div>
 
+          
+          
       </div>
     )
   }

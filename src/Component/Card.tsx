@@ -1,45 +1,37 @@
-import React from 'react';
-import { connect } from 'react-redux';
-
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import { Delete_card_action } from '../Store/FunctionReducers/listReducers';
+import { StoreList } from '../Store/store';
 
 
 interface card{
   id: number,
   title: String,
   description: String,
-  pos: number
+  pos: number,
+  index:number,
+  wListId:number
 } 
-
-function dragStartHandler():void{
-
+function deleteCard(id:number, idl:number){
+  StoreList.dispatch({type:Delete_card_action,index:idl, payload:id})
 }
-
-export const Card = (card:card) =>{
+export var Card = (card:card):any =>{
+    const idDrag = card.id.toString()+'-'+card.wListId.toString()
     return(
-       
-      <div draggable="true" onDragStart={()=>dragStartHandler()}>
+      <Draggable draggableId={idDrag} index={card.index} >
+      {(provided)=>(
+      <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
                 <div className="card card-wh">
                 <div className="card-body">
                     <h5 className="card-title">{card.title}</h5>
                     <h5 className="card-title"></h5>
-                    <p className="card-text">Description</p>
-                    <a href="#" className="btn btn-danger">Delete</a>
+                    <p className="card-text">{card.description}</p>
+                    <button className="btn btn-danger" onClick={()=>deleteCard(card.id,card.wListId)}>Delete</button>
                 </div>
                 </div>  
       </div> 
+      )}
+      </Draggable>
     )
-  }
-
-
-  interface StateProps{
-    card: Array<card>
-  }
-
-  const mapStateToProps = (state: any):StateProps => ({
-    card: state.list.card
-  });
-
-
-export default connect(mapStateToProps)(Card);
+}
 
  

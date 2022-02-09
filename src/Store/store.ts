@@ -4,9 +4,13 @@ import { ListReducer } from "./FunctionReducers/listReducers"
 
 export const StoreList = createStore(
     combineReducers({
-        listred : ListReducer
+        listred : ListReducer,
     }),
 )
+
+
+
+
 
 
 
